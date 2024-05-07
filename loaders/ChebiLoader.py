@@ -4,12 +4,13 @@ import gc
 import psutil
 
 class ChebiEntity:
-    def __init__(self, chebi_id, label):
+    def __init__(self, chebi_id, label, smiles):
         self.chebi_id = chebi_id
         self.label = label
+        self.smiles = smiles
         
     def __str__(self):
-        return f"{self.label}: {self.chebi_id}"
+        return f"{self.label}: {self.chebi_id} ({self.smiles})"
 
     def __repr__(self):
         return self.__str__()
@@ -63,13 +64,15 @@ class ChebiLoader:
     def __subclasses_from_chebi_resursively(self, chebi_id):
         results = list(default_world.sparql("""
         PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
-        SELECT DISTINCT ?id ?label ?synonym WHERE
+        PREFIX chebi: <http://purl.obolibrary.org/obo/chebi/>
+        SELECT DISTINCT ?id ?label ?smiles ?synonym WHERE
         {
             ?id rdfs:label ?label
+            ?id chebi:smiles ?smiles
             ?id rdfs:subClassOf* %s .
             { ?id oboInOwl:hasExactSynonym ?synonym. }
             UNION
-            { ?id oboInOwl:hasRelatedSynonym ?synonym. }        
+            { ?id oboInOwl:hasRelatedSynonym ?synonym. }
         }
         """ % (chebi_id)))
         
@@ -77,13 +80,14 @@ class ChebiLoader:
         entities_lower = {}
         for result in results:
             label = result[1]
-            synon = result[2]
+            smiles = result[2]
+            synon = result[3]
             chebi_id = result[0]            
 
-            entities[label] = ChebiEntity(chebi_id, label)
-            entities[synon] = ChebiEntity(chebi_id, label)
-            entities_lower[label.lower()] = ChebiEntity(chebi_id, label)
-            entities_lower[synon.lower()] = ChebiEntity(chebi_id, label)
+            entities[label] = ChebiEntity(chebi_id, label, smiles)
+            entities[synon] = ChebiEntity(chebi_id, label, smiles)
+            entities_lower[label.lower()] = ChebiEntity(chebi_id, label, smiles)
+            entities_lower[synon.lower()] = ChebiEntity(chebi_id, label, smiles)
             
         return entities, entities_lower
         
