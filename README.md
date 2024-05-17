@@ -5,6 +5,9 @@
 ## How it works
 The corresponding paper described the following steps, that are used to create the knowledge graph (KG):
 
+<img src="./assets/images/approach.drawio.png" alt="Steps used to create the KG" style="width:80">
+
+
 ### 1. Text Extraction
 We have downloaded 8,000 chemistry research papers from [ChemRxiv](https://chemrxiv.org/). The text extraction process is conducted in a separate NestJS project, which uses `pdf2txt` and creates a JSON file which includes:
 - the papers' metadata (downloaded from ChemRxiv)
@@ -51,7 +54,9 @@ Depending on the minRef hyperparameter specification, different KGs are created.
 
 
 Additionally we create a `nodes.json` and an `edges.json` JSON file, which contain chemical entities and roles as nodes and the :hasRole relationship between them as edges. These files are used in a separate VueJS project using v-network-graph to visualize the KG.
+The following image shows the KG when created using a very high `minRef` of 50:
 
+![KG created with minRef==50](./assets/images/KG_minref-50_8000_papers.png)
 
 ## Setup
 This section will contain detailed information of how to setup this project
