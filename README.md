@@ -13,7 +13,7 @@ We have downloaded 8,000 chemistry research papers from [ChemRxiv](https://chemr
 - the PDF file's pages with the full text
 
 ### 2. Chemical Entity and Chemical Role Recognition
-The `ner-chem-trainer notebook` fine-tunes a [Google Electra model](https://huggingface.co/google/electra-base-discriminator) on different datasets for NER:
+The `ner-chem-trainer` notebook fine-tunes a [Google Electra model](https://huggingface.co/google/electra-base-discriminator) on different datasets for NER:
 
 - The [BC5CDR](https://github.com/JHnlp/BioCreative-V-CDR-Corpus) dataset consists of human annotations of chemicals, diseases and their
 interactions from 1,500 PubMed articles
