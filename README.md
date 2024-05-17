@@ -47,6 +47,7 @@ cear:chem_4023 rdfs:label "PBS" .
 cear:chem_4023 obo:RO_0000087 obo:CHEBI_35225 .
 ```
 
+Depending on the minRef hyperparameter specification, different KGs are created. They can all be accessed at [https://wwwiti.cs.uni-magdeburg.de/iti_dke/cear/](https://wwwiti.cs.uni-magdeburg.de/iti_dke/cear/)
 
 
 Additionally we create a `nodes.json` and an `edges` JSON file, which contain chemical entities and roles as nodes and the :hasRole relationship between them as edges. These files are used in a separate VueJS project using v-network-graph to visualize the KG.
